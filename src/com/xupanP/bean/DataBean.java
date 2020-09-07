@@ -144,7 +144,10 @@ public class DataBean {
         this.inheritList = inheritList;
     }
 
-
+    /**
+     * 获取大标题
+     * @return
+     */
     public String getTitle() {
         return title;
     }
