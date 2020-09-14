@@ -1,8 +1,8 @@
-package com.xupanP.func;
+package com.wordGenerator.func;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
-import com.xupanP.bean.DataBean;
+import com.wordGenerator.bean.DataBean;
 
 import java.io.*;
 import java.util.ArrayList;

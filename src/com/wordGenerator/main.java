@@ -1,8 +1,9 @@
-package com.xupanP;
+package com.wordGenerator;
 
-import com.xupanP.bean.DataBean;
-import com.xupanP.func.FileUtils;
-import com.xupanP.func.GenerateWord;
+import com.wordGenerator.bean.DataBean;
+import com.wordGenerator.func.FileUtils;
+import com.wordGenerator.func.GenerateWord;
+
 import java.io.IOException;
 
 

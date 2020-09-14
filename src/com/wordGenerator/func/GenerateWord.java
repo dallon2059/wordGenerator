@@ -1,6 +1,6 @@
-package com.xupanP.func;
+package com.wordGenerator.func;
 
-import com.xupanP.bean.DataBean;
+import com.wordGenerator.bean.DataBean;
 import org.apache.poi.xwpf.usermodel.*;
 
 import java.io.FileOutputStream;

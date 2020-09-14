@@ -1,4 +1,4 @@
-package com.xupanP.func;
+package com.wordGenerator.func;
 
 import org.apache.poi.xwpf.usermodel.*;
 import org.openxmlformats.schemas.wordprocessingml.x2006.main.*;

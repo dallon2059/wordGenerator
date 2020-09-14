@@ -1,6 +1,5 @@
-package com.xupanP.bean;
+package com.wordGenerator.bean;
 
-import java.util.Calendar;
 import java.util.List;
 
 public class DataBean {
