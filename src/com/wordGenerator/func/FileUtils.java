@@ -6,7 +6,9 @@ import com.wordGenerator.bean.DataBean;
 
 import java.io.*;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class FileUtils {
 
@@ -78,6 +80,7 @@ public class FileUtils {
          */
         JSONObject aboutPaymentObjectC1 = jsonObject.getJSONObject("C1");
         List<String> aboutPaymentList = new ArrayList<>();
+        Map<String, String> imgBase64Map = new HashMap<>();
         int C1_count = 1;
         while(aboutPaymentObjectC1.get(C1_count+"") != null) {
             JSONObject tempObject = aboutPaymentObjectC1.getJSONObject(C1_count+"");
@@ -86,18 +89,36 @@ public class FileUtils {
             if ("1".equals(type)) {
                 String name = tempObject.getString("name");
                 String course = tempObject.getString("course");
-                aboutPaymentList.add(type + "," + name + "," + course);
-            } else if ("2".equals(type)) {
+                String updateBeforeBase64 = tempObject.getString("updateBeforeBase64");
+                String updateOpeBase64 = tempObject.getString("updateOpeBase64");
+                String updateAfterBase64 = tempObject.getString("updateAfterBase64");
+                aboutPaymentList.add(type + "," + name + "," + course + "," + updateBeforeBase64 + "," + updateOpeBase64 + "," + updateAfterBase64);
+
+              } else if ("2".equals(type)) {
                 String name = tempObject.getString("name");
                 String point = tempObject.getString("point");
-                aboutPaymentList.add(type + "," + name + "," + point);
+
+                String updateBefore1Base64 = tempObject.getString("updateBefore1Base64");
+                String updateBefore2Base64 = tempObject.getString("updateBefore2Base64");
+                String updateOpeBase64 = tempObject.getString("updateOpeBase64");
+                String updateAfter1Base64 = tempObject.getString("updateAfter1Base64");
+                String updateAfter2Base64 = tempObject.getString("updateAfter2Base64");
+                aboutPaymentList.add(type + "," + name + "," + point + "," + updateBefore1Base64 +
+                        "," + updateBefore2Base64 + "," + updateOpeBase64 +
+                        "," + updateAfter1Base64 + "," + updateAfter2Base64);
             } else if ("3".equals(type)) {
                 String name = tempObject.getString("name");
-                aboutPaymentList.add(type + "," + name);
+                String updateBeforeBase64 = tempObject.getString("updateBeforeBase64");
+                String updateOpeBase64 = tempObject.getString("updateOpeBase64");
+                String updateAfterBase64 = tempObject.getString("updateAfterBase64");
+
+                aboutPaymentList.add(type + "," + name + "," + updateBeforeBase64 + "," + updateOpeBase64 + "," + updateAfterBase64);
             } else if ("4".equals(type)) {
                 String name = tempObject.getString("name");
                 String course = tempObject.getString("course");
-                aboutPaymentList.add(type + "," + name + "," + course);
+                String updateBeforeBase64 = tempObject.getString("updateBeforeBase64");
+                aboutPaymentList.add(type + "," + name + "," + course + "," + updateBeforeBase64);
+
             } else if ("5".equals(type)) {
                 String name = tempObject.getString("name");
                 aboutPaymentList.add(type + "," + name);

@@ -1,6 +1,8 @@
 package com.wordGenerator.bean;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class DataBean {
 
@@ -27,6 +29,23 @@ public class DataBean {
      * 付款相关
      */
     private List<String> aboutPaymentList;
+
+//    /**
+//     * 付款相关的图片base64的Map
+//     * 1：会员套餐课程自动付款邮件，需要设置有效期限。更新前(1)、更新操作(1)、更新后(1)
+//     * 2：会员购买点数套餐，需要手动设置。更新前(2)、更新操作(1)、更新后(2)
+//     * 3：会员购买80点プレゼントポイント，需要手动加点。更新前(1)、更新操作(1)、更新后(1)
+//     * 4：会员套餐课程自动付款邮件，系统已经自动设置，无需手动处理。更新前(1)
+//     * 5：会员取消了自动付款。
+//     * // key是序号
+//     * "1":"base64(1),base64(2),base64(3)"
+//     * "2":"base64(1),base64(2),base64(3),base64(4),base64(5)"
+//     * "3":"base64(1),base64(2),base64(3)"
+//     * "4":"base64(1)"
+//     * 没有的场合
+//     * "1":"base64(1),nothing,base64(3)"
+//     */
+//    private Map<String, String> imgBase64Map;
 
     /**
      * 会员入会相关 会员名称
@@ -143,6 +162,13 @@ public class DataBean {
         this.inheritList = inheritList;
     }
 
+//    public Map<String, String> getImgBase64Map() {
+//        return imgBase64Map;
+//    }
+
+//    public void setImgBase64Map(Map<String, String> imgBase64Map) {
+//        this.imgBase64Map = imgBase64Map;
+//    }
     /**
      * 获取大标题
      * @return

@@ -28,6 +28,7 @@ public class GenerateWord {
         // D、需要告诉下一位值班负责人的事：
         List<String> inheritList = data.getInheritList();
 
+
         // 创建一个word对象
         XWPFDocument doc = new XWPFDocument();
 
@@ -173,7 +174,7 @@ public class GenerateWord {
             }
         }
 
-        FileOutputStream out = new FileOutputStream(path + "/" + data.getTitle() + ".doc");
+        FileOutputStream out = new FileOutputStream(path + "/" + data.getTitle() + ".docx");
         doc.write(out);
         out.close();
     }

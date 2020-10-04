@@ -1,10 +1,17 @@
 package com.wordGenerator.func;
 
+import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
+import org.apache.poi.util.Units;
 import org.apache.poi.xwpf.usermodel.*;
 import org.openxmlformats.schemas.wordprocessingml.x2006.main.*;
+import sun.misc.BASE64Decoder;
 
+import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
+import java.io.*;
 import java.math.BigInteger;
 import java.util.List;
+import java.util.Map;
 
 public class MyWordUtils {
 
@@ -88,6 +95,70 @@ public class MyWordUtils {
         MyWordUtils.setBackgroundColor(r, "FFFF00"); // 背景颜色
     }
 
+    public static void setImg(XWPFDocument doc, String base64ImgStr, String imgPath, String imgType) {
+        // todo
+        if ("nothing".equals(base64ImgStr)) {
+            doc.createParagraph().createRun();
+            return;
+        }
+        // word内容宽度
+        int wordWidth = 368;
+
+        BASE64Decoder decoder = new sun.misc.BASE64Decoder();
+        FileInputStream fis = null;
+        ByteArrayInputStream bais = null;
+        BufferedImage bi = null;
+        try {
+            // 把图片文件生成到指定的文件夹
+            byte[] imgBase64Bytes = decoder.decodeBuffer(base64ImgStr);
+            bais = new ByteArrayInputStream(imgBase64Bytes);
+            bi = ImageIO.read(bais);
+            File img = new File(imgPath);
+            if (!img.exists()) {
+                img.createNewFile();
+            }
+            ImageIO.write(bi, imgType, img);
+            // 把图片插入word中
+            XWPFParagraph p = doc.createParagraph();
+            XWPFRun r = p.createRun();
+            fis = new FileInputStream(imgPath);
+            // 计算图片大小
+            int width = bi.getWidth();
+            int height = bi.getHeight();
+            if (width > wordWidth) {
+                double times = wordWidth * 1.0 / width;
+                width = wordWidth;
+                height = (int)(height * times / 1);
+            }
+
+            r.addPicture(fis, XWPFDocument.PICTURE_TYPE_PNG, imgPath, Units.toEMU(width), Units.toEMU(height));
+            fis.close();
+            // 图片删除
+            img.delete();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (InvalidFormatException e) {
+            e.printStackTrace();
+        } finally {
+
+            if (fis != null) {
+                try {
+                    fis.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+            if (bais != null) {
+                try {
+                    bais.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+    }
+
+
     public static void setSubHeader(XWPFDocument doc, String subHeaderText) {
         XWPFParagraph p = doc.createParagraph();
         // 设置段落格式
@@ -126,6 +197,8 @@ public class MyWordUtils {
         for (int i = 0; i < paymentList.size(); i++) {
 
             String flag = paymentList.get(i).split(",")[0];
+            // 图片文件存放路径
+            String imgDir = "D:/code/XPwordgenerator/img/";
 
             /**
              *         aboutPaymentList.add("1,张三,週2日25分コース");
@@ -139,16 +212,26 @@ public class MyWordUtils {
 
                 String name = paymentList.get(i).split(",")[1];
                 String course = paymentList.get(i).split(",")[2];
+                // 更新前图片
+                String updateBefore = paymentList.get(i).split(",")[3];
+                // 更新操作
+                String updateOpe = paymentList.get(i).split(",")[4];
+                // 更新后图片
+                String updateAfter = paymentList.get(i).split(",")[5];
+
 
                 MyWordUtils.setData(doc, (i + 1) + "、收到会员" + name + "的" + course + "的付款邮件，已经设置了有效期限，具体操作如下：");
                 MyWordUtils.setData(doc, "更新前：");
-                doc.createParagraph().createRun();
+                // doc.createParagraph().createRun();
+                setImg(doc, updateBefore, imgDir + "img.png", "png");
 
                 MyWordUtils.setData(doc, "更新操作：");
-                doc.createParagraph().createRun();
+                // doc.createParagraph().createRun();
+                setImg(doc, updateOpe,  imgDir + "img.png", "png");
 
                 MyWordUtils.setData(doc, "更新后：");
-                doc.createParagraph().createRun();
+                // doc.createParagraph().createRun();
+                setImg(doc, updateAfter,  imgDir + "img.png", "png");
             } else if ("2".equals(flag)) {
 
                 /**
@@ -157,15 +240,31 @@ public class MyWordUtils {
                 String name = paymentList.get(i).split(",")[1];
                 String point = paymentList.get(i).split(",")[2];
 
+                // 更新前图片
+                String updateBefore_1 = paymentList.get(i).split(",")[3];
+                // 更新前图片
+                String updateBefore_2 = paymentList.get(i).split(",")[4];
+                // 更新操作
+                String updateOpe = paymentList.get(i).split(",")[5];
+                // 更新后图片
+                String updateAfter_1 = paymentList.get(i).split(",")[6];
+                // 更新后图片
+                String updateAfter_2 = paymentList.get(i).split(",")[7];
+
                 MyWordUtils.setData(doc, (i + 1) + "、会员" + name + "购买了" + point + "点点数，系统没有自动添加，已经手动添加，并且设置了有效期限，具体操作如下：");
                 MyWordUtils.setData(doc, "更新前：");
-                doc.createParagraph().createRun();
+                // doc.createParagraph().createRun();
+                setImg(doc, updateBefore_1,  imgDir + "img.png", "png");
+                setImg(doc, updateBefore_2,  imgDir + "img.png", "png");
 
                 MyWordUtils.setData(doc, "更新操作：");
-                doc.createParagraph().createRun();
+                // doc.createParagraph().createRun();
+                setImg(doc, updateOpe,  imgDir + "img.png", "png");
 
                 MyWordUtils.setData(doc, "更新后：");
-                doc.createParagraph().createRun();
+                // doc.createParagraph().createRun();
+                setImg(doc, updateAfter_1,  imgDir + "img.png", "png");
+                setImg(doc, updateAfter_2,  imgDir + "img.png", "png");
             } else if ("3".equals(flag)) {
 
                 /**
@@ -173,15 +272,25 @@ public class MyWordUtils {
                  */
                 String name = paymentList.get(i).split(",")[1];
 
+                // 更新前图片
+                String updateBefore = paymentList.get(i).split(",")[2];
+                // 更新操作
+                String updateOpe = paymentList.get(i).split(",")[3];
+                // 更新后图片
+                String updateAfter = paymentList.get(i).split(",")[4];
+
                 MyWordUtils.setData(doc, (i + 1) + "、会员" + name + "购买了80点点数，系统没有自动添加，已经手动添加，具体操作如下：");
                 MyWordUtils.setData(doc, "更新前：");
-                doc.createParagraph().createRun();
+                // doc.createParagraph().createRun();
+                setImg(doc, updateBefore,  imgDir + "img.png", "png");
 
                 MyWordUtils.setData(doc, "更新操作：");
-                doc.createParagraph().createRun();
+                // doc.createParagraph().createRun();
+                setImg(doc, updateOpe,  imgDir + "img.png", "png");
 
                 MyWordUtils.setData(doc, "更新后：");
-                doc.createParagraph().createRun();
+                // doc.createParagraph().createRun();
+                setImg(doc, updateAfter,  imgDir + "img.png", "png");
             } else if ("4".equals(flag)) {
 
                 /**
@@ -190,9 +299,13 @@ public class MyWordUtils {
                 String name = paymentList.get(i).split(",")[1];
                 String course = paymentList.get(i).split(",")[2];
 
+                // 更新前图片
+                String updateBefore = paymentList.get(i).split(",")[3];
+
                 MyWordUtils.setData(doc, (i + 1) + "、收到会员" + name + "的" + course + "的付款邮件，系统已经自动处理，没有操作，具体情况如下：");
                 MyWordUtils.setData(doc, "更新前：");
-                doc.createParagraph().createRun();
+                // doc.createParagraph().createRun();
+                setImg(doc, updateBefore,  imgDir + "img.png", "png");
             } else if ("5".equals(flag)) {
 
                 /**
