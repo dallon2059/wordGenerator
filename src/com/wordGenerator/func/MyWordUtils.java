@@ -15,6 +15,8 @@ import java.util.Map;
 
 public class MyWordUtils {
 
+    public static String IMG_PATH;
+
 
     public static void setBackgroundColor(XWPFRun r, String bgc) {
 
@@ -198,7 +200,7 @@ public class MyWordUtils {
 
             String flag = paymentList.get(i).split(",")[0];
             // 图片文件存放路径
-            String imgDir = "D:/code/XPwordgenerator/img/";
+            String imgDir = IMG_PATH;
 
             /**
              *         aboutPaymentList.add("1,张三,週2日25分コース");

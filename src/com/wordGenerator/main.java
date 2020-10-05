@@ -14,7 +14,10 @@ public class main {
 //        System.out.println(args[0]);
 //        System.out.println(args[1]);
 
-        String path = "D:\\code\\XPwordgenerator\\out\\data.json";
+        // 读入路径
+        String path = args[0];
+        // 图片路径
+        MyWordUtils.IMG_PATH = args[1];
 
         // 获取json内容
         String jsonStr = FileUtils.readFile(path);
@@ -22,8 +25,9 @@ public class main {
         // 把json内容转为bean
         DataBean dataBean = FileUtils.readJsonToBean(jsonStr);
 
+        // 输出路径
+        String outPath = args[2];
         // 生成word
-        String outPath = "D:/code/XPwordgenerator/out";
         GenerateWord.generate(dataBean, outPath);
 
     }
